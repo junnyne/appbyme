@@ -1,118 +1,69 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import nodemailer from "nodemailer";
-import axios from "axios";
+const firebaseConfig = {
+  apiKey: "AIzaSyBi5e3Z_qYNA_-Tq5UDvTvDO64SWskrhVc",
+  authDomain: "appbyme-adf77.firebaseapp.com",
+  projectId: "appbyme-adf77",
+  storageBucket: "appbyme-adf77.firebasestorage.app",
+  messagingSenderId: "327773981674",
+  appId: "1:327773981674:web:e138695b9bd6b8ef004093",
+  measurementId: "G-ZS9B6T3FJ4"
+};
 
-dotenv.config();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+function loginGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
 
-app.use(cors({
-  origin: process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(",").map(v => v.trim())
-    : "*"
-}));
-app.use(express.json());
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      const now = new Date(); // thời gian login
 
-function escapeHtml(str = "") {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+      const data = {
+        name: user.displayName,
+        email: user.email,
+        avatar: user.photoURL,
+        time: now.toLocaleString() // thêm login time
+      };
+
+      console.log("User:", data);
+
+      document.getElementById("login-popup").style.display = "none";
+      localStorage.setItem("user", JSON.stringify(data));
+
+      // Gửi email với login time
+      sendWelcomeEmail(data);
+    })
+    .catch(err => {
+      console.log(err);
+      alert("Lỗi login 😤");
+    });
 }
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD
+function sendWelcomeEmail(user) {
+    const templateParams = {
+        to_name: user.name,
+        to_email: user.email,
+        avatar: user.avatar,
+        login_time: user.time,  // thêm biến login time
+        message: "Có người stalk bạn nè!"
+    };
+
+    emailjs.send("service_s1e0tfh", "template_p4zuu3a", templateParams)
+        .then(function(response) {
+           console.log("Email sent!", response.status, response.text);
+           toast("Email đã gửi thành công ✨");
+        }, function(error) {
+           console.log("Failed to send email:", error);
+           toast("Gửi email thất bại 😢");
+        });
+}
+
+window.onload = () => {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    document.getElementById("login-popup").classList.add("show");
+  } else {
+    document.getElementById("login-popup").style.display = "none";
   }
-});
-
-app.get("/health", (_, res) => {
-  res.json({ ok: true });
-});
-
-app.post("/submit-profile", async (req, res) => {
-  try {
-    const { platform, accessToken, userID } = req.body || {};
-
-    if (platform !== "facebook") {
-      return res.status(400).json({ ok: false, message: "Chỉ hỗ trợ facebook" });
-    }
-
-    if (!accessToken || !userID) {
-      return res.status(400).json({ ok: false, message: "Thiếu accessToken hoặc userID" });
-    }
-
-    const graphResponse = await axios.get("https://graph.facebook.com/me", {
-      params: {
-        fields: "id,name,picture.width(300).height(300)",
-        access_token: accessToken
-      },
-      timeout: 15000
-    });
-
-    const profile = graphResponse.data || {};
-
-    if (!profile.id || String(profile.id) !== String(userID)) {
-      return res.status(400).json({ ok: false, message: "Token không khớp user" });
-    }
-
-    const avatarUrl = profile.picture?.data?.url || "";
-    const safeId = escapeHtml(String(profile.id || "").slice(0, 120));
-    const safeName = escapeHtml(String(profile.name || "").slice(0, 120));
-    const safeAvatar = escapeHtml(String(avatarUrl || "").slice(0, 1000));
-    const now = new Date().toLocaleString("vi-VN", {
-      timeZone: "Asia/Ho_Chi_Minh"
-    });
-
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.RECEIVER_EMAIL,
-      subject: "[facebook] Người dùng đã chia sẻ hồ sơ",
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.6">
-          <h2>Thông tin người dùng</h2>
-          <p><strong>Nền tảng:</strong> Facebook</p>
-          <p><strong>ID:</strong> ${safeId}</p>
-          <p><strong>Tên:</strong> ${safeName}</p>
-          <p><strong>Avatar:</strong><br>
-            <img src="${safeAvatar}" alt="avatar" style="max-width:220px;border-radius:12px;border:1px solid #ddd" />
-          </p>
-          <p><strong>Link ảnh:</strong> ${safeAvatar}</p>
-          <p><strong>Thời gian:</strong> ${escapeHtml(now)}</p>
-        </div>
-      `
-    });
-
-    return res.json({
-      ok: true,
-      profile: {
-        id: profile.id,
-        name: profile.name,
-        avatar: avatarUrl
-      }
-    });
-  } catch (error) {
-    const message =
-      error?.response?.data?.error?.message ||
-      error?.message ||
-      "Lỗi server";
-
-    console.error("submit-profile error:", message);
-
-    return res.status(500).json({
-      ok: false,
-      message
-    });
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+};

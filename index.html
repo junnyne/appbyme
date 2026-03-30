@@ -160,22 +160,6 @@
             z-index: 9998;
         }
 
-        #fb-user {
-            display: none;
-            margin-top: 16px;
-            align-items: center;
-            gap: 12px;
-        }
-
-        #fb-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, .1);
-            background: #111827;
-        }
-
         /* POPUP */
         #login-popup {
             position: fixed;
@@ -321,23 +305,6 @@
                 <button id="reset-custom">Xóa</button>
             </div>
         </div>
-
-        <!-- FACEBOOK LOGIN INFO -->
-        <div class="card" style="grid-column:1/-1">
-            <h1>Thông tin Facebook</h1>
-            <div class="small" style="margin-bottom:12px">
-                Sau khi đăng nhập, tên và ảnh đại diện sẽ hiện ở đây.
-            </div>
-
-            <div id="fb-user">
-                <img id="fb-avatar" src="" alt="avatar">
-                <div>
-                    <div id="fb-name" style="font-weight:700"></div>
-                    <div id="fb-status" class="small"></div>
-                </div>
-            </div>
-        </div>
-
         <footer>© Lê Thị Ngọc Dung</footer>
     </div>
 
@@ -348,18 +315,18 @@
     </div>
 
     <div id="celebrate" style="
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  background:rgba(0,0,0,.85);
-  z-index:9999;
-  color:#facc15;
-  font-size:48px;
-  font-weight:800;
-  text-align:center;">
+        position:fixed;
+        inset:0;
+        display:none;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        background:rgba(0,0,0,.85);
+        z-index:9999;
+        color:#facc15;
+        font-size:48px;
+        font-weight:800;
+        text-align:center;">
         <div id="celebrate-title"></div>
         <div id="celebrate-sub" style="font-size:18px;margin-top:12px;color:#fff"></div>
     </div>
@@ -367,11 +334,10 @@
     <!-- POPUP -->
     <div id="login-popup">
         <div class="popup-card">
-            <h2>Đăng nhập Facebook</h2>
-            <p>Tiếp tục bằng Facebook để chia sẻ hồ sơ.</p>
-
+            <h2>Đăng nhập Google 🚀</h2>
+            <p>Tiếp tục bằng Google để truy cập trang web.</p>
             <div class="popup-actions">
-                <button id="popup-login-btn">Tiếp tục với Facebook</button>
+                <button onclick="loginGoogle()">Đăng nhập</button>
             </div>
         </div>
     </div>
@@ -678,101 +644,14 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
     </script>
-
-    <script>
-        const API_BASE = "https://YOUR-BACKEND-DOMAIN.com";
-        const FB_APP_ID = "YOUR_FACEBOOK_APP_ID";
-        const GRAPH_API_VERSION = "v23.0";
-
-        let fbReady = false;
-
-        const loginPopup = document.getElementById("login-popup");
-        const popupLoginBtn = document.getElementById("popup-login-btn");
-        const popupCloseBtn = document.getElementById("popup-close-btn");
-
-        const fbUser = document.getElementById("fb-user");
-        const fbAvatar = document.getElementById("fb-avatar");
-        const fbName = document.getElementById("fb-name");
-        const fbStatus = document.getElementById("fb-status");
-
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: FB_APP_ID,
-                cookie: true,
-                xfbml: false,
-                version: GRAPH_API_VERSION
-            });
-            fbReady = true;
-        };
-
-        async function sendTokenToBackend(authResponse) {
-            const res = await fetch(`${API_BASE}/submit-profile`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    platform: "facebook",
-                    accessToken: authResponse.accessToken,
-                    userID: authResponse.userID
-                })
-            });
-
-            const data = await res.json();
-
-            if (!res.ok || !data.ok) {
-                throw new Error(data.message || "Gửi thất bại");
-            }
-
-            return data;
-        }
-
-        function startFacebookLogin() {
-            if (!fbReady || typeof FB === "undefined") {
-                toast("Facebook chưa tải xong");
-                return;
-            }
-
-            FB.login(async function (response) {
-                if (!response || !response.authResponse) {
-                    toast("Bạn chưa cấp quyền Facebook");
-                    return;
-                }
-
-                fbUser.style.display = "flex";
-                fbName.textContent = "Đang xử lý...";
-                fbStatus.textContent = "Đang gửi về server...";
-
-                try {
-                    const data = await sendTokenToBackend(response.authResponse);
-
-                    fbAvatar.src = data.profile.avatar || "";
-                    fbName.textContent = data.profile.name || "Không rõ tên";
-                    fbStatus.textContent = "Đã gửi về Gmail thành công";
-                    toast("Đăng nhập Facebook thành công");
-
-                    loginPopup.classList.remove("show");
-                } catch (err) {
-                    console.error(err);
-                    fbName.textContent = "Không thể xử lý";
-                    fbStatus.textContent = "Gửi thất bại";
-                    toast("Gửi về server thất bại");
-                }
-            }, {
-                scope: "public_profile"
-            });
-        }
-
-        window.addEventListener("load", function () {
-            loginPopup.classList.add("show");
-        });
-
-        popupLoginBtn.addEventListener("click", function () {
-            startFacebookLogin();
-        });
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="server.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("WCtzIn3rtDHcGjjOW"); 
+        })();
     </script>
-
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </body>
-
 </html>
