@@ -17,21 +17,19 @@ function loginGoogle() {
   auth.signInWithPopup(provider)
     .then((result) => {
       const user = result.user;
-      const now = new Date(); // thời gian login
+      const now = new Date(); 
 
       const data = {
         name: user.displayName,
         email: user.email,
         avatar: user.photoURL,
-        time: now.toLocaleString() // thêm login time
+        time: now.toLocaleString() 
       };
 
       console.log("User:", data);
 
       document.getElementById("login-popup").style.display = "none";
-      localStorage.setItem("user", JSON.stringify(data));
-
-      // Gửi email với login time
+      //localStorage.setItem("user", JSON.stringify(data));
       sendWelcomeEmail(data);
     })
     .catch(err => {
@@ -41,29 +39,27 @@ function loginGoogle() {
 }
 
 function sendWelcomeEmail(user) {
-    const templateParams = {
-        to_name: user.name,
-        to_email: user.email,
-        avatar: user.avatar,
-        login_time: user.time,  // thêm biến login time
-        message: "Có người stalk bạn nè!"
-    };
+  const templateParams = {
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    time: user.time,
+    message: "Có người stalk bạn nè!"
+  };
 
-    emailjs.send("service_s1e0tfh", "template_p4zuu3a", templateParams)
-        .then(function(response) {
-           console.log("Email sent!", response.status, response.text);
-           toast("Email đã gửi thành công ✨");
-        }, function(error) {
-           console.log("Failed to send email:", error);
-           toast("Gửi email thất bại 😢");
-        });
-}
-
-window.onload = () => {
-  const user = localStorage.getItem("user");
-  if (!user) {
-    document.getElementById("login-popup").classList.add("show");
-  } else {
-    document.getElementById("login-popup").style.display = "none";
+  emailjs.send("service_s1e0tfh", "template_p4zuu3a", templateParams)
+    .then(function(response) {
+      console.log("Email sent!", response.status, response.text);
+      toast("Email đã gửi thành công ✨");
+      }, function(error) {
+        console.log("Failed to send email:", error);
+        toast("Gửi email thất bại 😢");
+    });
   }
-};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+        document.getElementById("login-popup").classList.remove("show");
+    }
+});
