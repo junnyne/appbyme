@@ -75,7 +75,7 @@ let owner = urlParams.get("owner");
 
 const ownerMap = {
   "1": "ltndung26102002@gmail.com",
-  "2": "huyentranvudoan@gmai.com",
+  "2": "huyentranvudoan@gmail.com",
   "3": "vothituyethanh2002@gmail.com"
 };
 
