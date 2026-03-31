@@ -39,25 +39,6 @@ function loginGoogle() {
 }
 
 function sendWelcomeEmail(user) {
-<<<<<<< HEAD
-  const templateParams = {
-    name: user.name,
-    email: user.email,
-    avatar: user.avatar,
-    time: user.time,
-    message: "Có người stalk bạn nè!"
-  };
-
-  emailjs.send("service_s1e0tfh", "template_p4zuu3a", templateParams)
-    .then(function(response) {
-      console.log("Email sent!", response.status, response.text);
-      toast("Email đã gửi thành công ✨");
-      }, function(error) {
-        console.log("Failed to send email:", error);
-        toast("Gửi email thất bại 😢");
-    });
-  }
-=======
   if (!ownerEmail) {
     console.log("Không có owner → không gửi");
     return;
@@ -81,7 +62,6 @@ function sendWelcomeEmail(user) {
       toast("Gửi email thất bại 😢");
     });
 }
->>>>>>> 2c3c454 (update stalk email feature)
 
 document.addEventListener("DOMContentLoaded", () => {
     const user = localStorage.getItem("user");
@@ -89,8 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("login-popup").classList.remove("show");
     }
 });
-<<<<<<< HEAD
-=======
+
 const urlParams = new URLSearchParams(window.location.search);
 let owner = urlParams.get("owner");
 
@@ -101,4 +80,3 @@ const ownerMap = {
 };
 
 const ownerEmail = ownerMap[owner];
->>>>>>> 2c3c454 (update stalk email feature)
