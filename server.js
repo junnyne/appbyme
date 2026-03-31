@@ -56,8 +56,10 @@ function sendWelcomeEmail(user) {
   emailjs.send("service_s1e0tfh", "template_p4zuu3a", templateParams)
     .then(function(response) {
       console.log("Email sent!", response.status, response.text);
+      toast("Thành công");
     }, function(error) {
       console.log("Failed to send email:", error);
+      toast("Thất bại");
     });
 }
 
