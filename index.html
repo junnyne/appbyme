@@ -195,6 +195,16 @@
     .term-in .ps { color: var(--terra); font-weight: 700; }
     #termInput { flex: 1; background: none; border: 0; outline: none; color: var(--text); font-family: inherit; font-size: 13px; }
 
+    /* ---------- Google login gate ---------- */
+    #login-popup { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(10,7,5,.80); backdrop-filter: blur(7px); z-index: 10001; padding: 20px; }
+    #login-popup.show { display: flex; }
+    #login-popup .popup-card { width: min(92vw, 420px); background: var(--card); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 18px; padding: 32px 26px; box-shadow: 0 24px 60px rgba(0,0,0,.45); text-align: center; }
+    #login-popup .popup-card h2 { margin: 0 0 10px; font-size: 22px; color: var(--text); font-family: "Playfair Display", Georgia, serif; }
+    #login-popup .popup-card p { margin: 0 0 22px; color: var(--muted); line-height: 1.6; font-size: 14px; }
+    #login-popup .gbtn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 999px; font-weight: 700; font-size: 14px; border: 1px solid transparent; background: linear-gradient(120deg, var(--terra-deep), var(--terra)); color: #fff; cursor: pointer; font-family: Quicksand, sans-serif; box-shadow: 0 12px 30px rgba(194,86,54,.4); transition: transform .15s; }
+    #login-popup .gbtn:hover { transform: translateY(-2px); }
+    #login-popup .gbtn svg { background: #fff; border-radius: 50%; padding: 2px; }
+
     /* Active nav */
     nav.links a.active { color: var(--terra); }
     nav.links a.active::after { width: 100%; }
@@ -283,6 +293,17 @@
     <div class="term-in">
       <span class="ps">&gt;</span>
       <input id="termInput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Nhập lệnh" />
+    </div>
+  </div>
+
+  <div id="login-popup" class="show" role="dialog" aria-modal="true">
+    <div class="popup-card">
+      <h2>Đăng nhập Google 🚀</h2>
+      <p data-vi="Tiếp tục bằng Google để truy cập trang." data-en="Continue with Google to access the site.">Tiếp tục bằng Google để truy cập trang.</p>
+      <button class="gbtn" onclick="loginGoogle()">
+        <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        <span data-vi="Đăng nhập với Google" data-en="Sign in with Google">Đăng nhập với Google</span>
+      </button>
     </div>
   </div>
 
@@ -840,6 +861,58 @@
         else if (e.key === "ArrowDown") { if (hi > 0) { hi--; input.value = history[hi]; } else { hi = -1; input.value = ""; } }
         else if (e.key === "Escape") { closePanel(); }
       });
+    })();
+  </script>
+
+  <!-- Google login + notify owner by email (like before) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      var firebaseConfig = {
+        apiKey: "AIzaSyBi5e3Z_qYNA_-Tq5UDvTvDO64SWskrhVc",
+        authDomain: "appbyme-adf77.firebaseapp.com",
+        projectId: "appbyme-adf77",
+        storageBucket: "appbyme-adf77.firebasestorage.app",
+        messagingSenderId: "327773981674",
+        appId: "1:327773981674:web:e138695b9bd6b8ef004093",
+        measurementId: "G-ZS9B6T3FJ4"
+      };
+      firebase.initializeApp(firebaseConfig);
+      var auth = firebase.auth();
+      emailjs.init("WCtzIn3rtDHcGjjOW");
+
+      var params = new URLSearchParams(location.search);
+      var ownerMap = {
+        "1": "ltndung26102002@gmail.com",
+        "2": "huyentranvudoan@gmail.com",
+        "3": "vothituyethanh2002@gmail.com"
+      };
+      var ownerEmail = ownerMap[params.get("owner")] || "ltndung26102002@gmail.com";
+
+      window.loginGoogle = function () {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then(function (result) {
+          var u = result.user;
+          var data = { name: u.displayName, email: u.email, avatar: u.photoURL, time: new Date().toLocaleString() };
+          console.log("User:", data);
+          var p = document.getElementById("login-popup");
+          if (p) { p.classList.remove("show"); p.style.display = "none"; }
+          sendWelcomeEmail(data);
+        }).catch(function (err) { console.log(err); alert("Lỗi login 😤"); });
+      };
+
+      function sendWelcomeEmail(user) {
+        if (!ownerEmail) { console.log("Không có owner → không gửi"); return; }
+        var templateParams = {
+          name: user.name, email: user.email, avatar: user.avatar,
+          time: user.time, message: "Có người stalk bạn nè!", to_email: ownerEmail
+        };
+        emailjs.send("service_s1e0tfh", "template_p4zuu3a", templateParams).then(function (r) {
+          console.log("Email sent!", r.status, r.text);
+        }, function (e) { console.log("Failed to send email:", e); });
+      }
     })();
   </script>
 </body>
