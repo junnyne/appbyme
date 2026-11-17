@@ -2,656 +2,847 @@
 <html lang="vi">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>App by me</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lê Thị Ngọc Dung — QA / Tester · Front-end</title>
+  <meta name="description" content="Trang giới thiệu bản thân của Lê Thị Ngọc Dung — Software QA Engineer / Tester & Front-end Developer." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23c15a3a'/><text x='32' y='45' font-size='38' text-anchor='middle' fill='%23fff' font-family='Georgia,serif'>D</text></svg>">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Lê Thị Ngọc Dung — QA / Tester · Front-end" />
+  <meta property="og:description" content="Software QA Engineer · Tester & Front-end Developer — manual/API testing, hệ thống IoT thời gian thực, React/Vue." />
+  <meta property="og:image" content="avatar.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("theme_v2")||"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+  <style>
+    :root {
+      --bg: #fbf3ec;
+      --bg2: #f6e7da;
+      --grad3: #f1ddc9;
+      --navbg: rgba(251, 243, 236, .68);
+      --terra: #e0906b;
+      --terra-deep: #c15a3a;
+      --amber: #d79a4e;
+      --peach: #eab98d;
+      --text: #4a382f;
+      --muted: #9a8578;
+      --card: rgba(255, 252, 249, .64);
+      --border: rgba(193, 90, 58, .20);
+      --track: rgba(193, 90, 58, .14);
+      color-scheme: light;
+    }
+    :root[data-theme="dark"] {
+      --bg: #15100d;
+      --bg2: #1c1511;
+      --grad3: #241812;
+      --navbg: rgba(21, 16, 13, .62);
+      --terra: #e8906b;
+      --terra-deep: #c15a3a;
+      --amber: #e0a13e;
+      --peach: #c47a4a;
+      --text: #f3ece5;
+      --muted: #c3b4a7;
+      --card: rgba(255, 255, 255, .06);
+      --border: rgba(224, 122, 82, .32);
+      --track: rgba(255, 255, 255, .1);
+      color-scheme: dark;
+    }
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-    <style>
-        :root {
-            --bg: #0f1724;
-            --card: #0b1220;
-            --accent: #f59e0b;
-            --muted: #9aa4b2;
-            color-scheme: dark;
-        }
+    body {
+      margin: 0;
+      font-family: Quicksand, system-ui, sans-serif;
+      background: linear-gradient(160deg, var(--bg), var(--bg2) 60%, var(--grad3));
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background .4s ease, color .4s ease;
+    }
 
-        body {
-            margin: 0;
-            font-family: Inter, system-ui;
-            background: linear-gradient(180deg, #071029, #091426);
-            color: #e6eef8;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-        }
+    a { color: inherit; text-decoration: none; }
+    .serif { font-family: "Playfair Display", serif; }
 
-        .wrap {
-            max-width: 960px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-        }
+    #embers { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .glow { position: fixed; border-radius: 50%; filter: blur(100px); opacity: .32; z-index: 0; pointer-events: none; animation: drift 18s ease-in-out infinite; }
+    .glow.a { width: 440px; height: 440px; background: var(--terra-deep); top: -140px; left: -90px; }
+    .glow.b { width: 380px; height: 380px; background: var(--amber); bottom: -150px; right: -70px; animation-delay: -9s; opacity: .2; }
+    .glow.c { width: 300px; height: 300px; background: var(--peach); top: 42%; left: 56%; animation-delay: -4s; opacity: .3; }
+    @keyframes drift { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(36px,30px) scale(1.12)} }
 
-        .card {
-            background: rgba(255, 255, 255, .03);
-            border: 1px solid rgba(255, 255, 255, .06);
-            border-radius: 12px;
-            padding: 20px;
-        }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
 
-        h1 {
-            font-size: 18px;
-            margin: 0 0 8px
-        }
+    header.nav { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(14px); background: var(--navbg); border-bottom: 1px solid var(--border); transition: background .4s ease; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
+    .brand { font-weight: 700; font-size: 18px; letter-spacing: 3px; text-transform: uppercase; }
+    .brand span { color: var(--terra); }
+    .nav-right { display: flex; align-items: center; gap: 22px; }
+    nav.links { display: flex; gap: 24px; }
+    nav.links a { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; position: relative; transition: color .2s; }
+    nav.links a::after { content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background: linear-gradient(90deg,var(--terra),var(--amber)); transition: width .25s; }
+    nav.links a:hover { color: var(--text); }
+    nav.links a:hover::after { width: 100%; }
 
-        .big {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--accent)
-        }
+    .toggles { display: flex; gap: 8px; }
+    .tbtn { font-family: Quicksand, sans-serif; cursor: pointer; width: 40px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 13px; font-weight: 700; letter-spacing: .5px; transition: transform .15s, border-color .2s, color .2s; }
+    .tbtn:hover { transform: translateY(-2px); border-color: var(--terra); color: var(--terra); }
 
-        .small {
-            font-size: 13px;
-            color: var(--muted)
-        }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
 
-        .units {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px
-        }
+    .hero { display: grid; grid-template-columns: 1fr auto; gap: 52px; align-items: center; padding: 84px 0 66px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 22px; }
+    .eyebrow::before { content:""; width: 28px; height: 1px; background: var(--terra); display: inline-block; }
+    .hero h1 { font-size: clamp(38px, 6vw, 60px); line-height: 1.05; margin: 0 0 14px; font-weight: 800; letter-spacing: -1px; }
+    .hero h1 em { font-style: italic; background: linear-gradient(120deg, var(--terra), var(--amber)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .role { font-size: 15px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin: 0 0 18px; }
+    .hero .lead { font-size: 16px; color: var(--muted); max-width: 48ch; margin: 0 0 28px; }
+    .cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 999px; font-weight: 600; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border); background: var(--card); transition: transform .18s, box-shadow .25s, background .2s; font-family: Quicksand, sans-serif; cursor: pointer; }
+    .btn:hover { transform: translateY(-3px); }
+    .btn.primary { background: linear-gradient(120deg, var(--terra-deep), var(--terra)); color: #fff; border-color: transparent; box-shadow: 0 12px 30px rgba(194,86,54,.4); }
+    .btn.primary:hover { box-shadow: 0 18px 40px rgba(194,86,54,.6); }
 
-        .unit {
-            flex: 1;
-            background: rgba(255, 255, 255, .04);
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center
-        }
+    .tilt { perspective: 1000px; }
+    .frame {
+      width: 280px; height: 280px; border-radius: 50%; padding: 6px;
+      background: linear-gradient(145deg, var(--terra), var(--amber) 50%, var(--terra-deep));
+      box-shadow: 0 30px 70px rgba(193,90,58,.3);
+      transform-style: preserve-3d; transition: transform .12s ease-out; position: relative;
+    }
+    .frame .photo-wrap { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: var(--bg2); }
+    .frame img { width: 100%; height: 100%; object-fit: cover; object-position: 44% 40%; display: block; filter: contrast(1.05) saturate(1.05); }
 
-        .unit .n {
-            font-size: 20px;
-            font-weight: 700
-        }
+    section { padding: 56px 0; }
+    .sec-title { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin: 0 0 8px; display: flex; align-items: center; gap: 12px; }
+    .sec-title::before { content:""; width: 24px; height: 1px; background: var(--terra); }
+    .sec-head { font-size: clamp(26px, 4vw, 36px); font-weight: 800; margin: 0 0 30px; letter-spacing: -.5px; }
 
-        .controls {
-            grid-column: 1/-1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px
-        }
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; }
+    .about-grid p { color: var(--muted); margin: 0 0 15px; }
+    .about-grid strong { color: var(--text); }
+    .facts { display: grid; gap: 10px; align-content: start; }
+    .fact { display: flex; justify-content: space-between; gap: 14px; padding: 14px 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; }
+    .fact .k { color: var(--muted); white-space: nowrap; }
+    .fact .v { font-weight: 600; text-align: right; }
 
-        .input-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap
-        }
+    .skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+    .skill { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+    .skill h4 { margin: 0 0 12px; font-size: 14px; display: flex; justify-content: space-between; font-weight: 600; letter-spacing: .3px; }
+    .skill h4 span { color: var(--muted); font-size: 12px; font-weight: 600; }
+    .bar { height: 7px; background: var(--track); border-radius: 999px; overflow: hidden; }
+    .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--terra), var(--amber)); border-radius: 999px; transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+    .chips span { font-size: 12px; color: var(--muted); background: rgba(193,90,58,.05); border: 1px solid var(--border); padding: 6px 15px; border-radius: 999px; font-weight: 500; letter-spacing: .3px; transition: color .2s, border-color .2s; }
+    .chips span:hover { color: var(--terra); border-color: var(--terra); }
+    .grp-label { display: flex; align-items: center; gap: 10px; margin: 30px 0 14px; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); }
+    .grp-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+    .grp-label:first-of-type { margin-top: 4px; }
 
-        input {
-            padding: 8px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, .1);
-            background: transparent;
-            color: #fff
-        }
+    .timeline { position: relative; margin-left: 6px; padding-left: 30px; border-left: 1px solid var(--border); display: grid; gap: 28px; }
+    .tl { position: relative; }
+    .tl::before { content:""; position: absolute; left: -36px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--terra); box-shadow: 0 0 0 4px rgba(194,86,54,.18); }
+    .tl .when { font-size: 12px; font-weight: 700; color: var(--amber); letter-spacing: 1px; }
+    .tl h3 { margin: 5px 0 2px; font-size: 19px; font-family: "Playfair Display", serif; font-weight: 600; }
+    .tl .where { font-size: 14px; color: var(--terra); font-weight: 600; margin-bottom: 8px; }
+    .tl ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .tl li { margin-bottom: 4px; }
 
-        button {
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: none;
-            background: var(--accent);
-            font-weight: 700;
-            cursor: pointer
-        }
+    .contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 48px 34px; text-align: center; position: relative; overflow: hidden; }
+    .contact-card::before { content:""; position:absolute; inset:0; background: radial-gradient(circle at 50% 0%, rgba(224,122,82,.16), transparent 65%); pointer-events:none; }
+    .contact-card h2 { margin: 0 0 12px; font-size: 30px; font-weight: 800; font-family: "Playfair Display", serif; }
+    .contact-card p { color: var(--muted); max-width: 46ch; margin: 0 auto 26px; }
+    .socials { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-        footer {
-            grid-column: 1/-1;
-            text-align: center;
-            color: var(--muted)
-        }
+    footer { text-align: center; color: var(--muted); font-size: 12px; letter-spacing: 1px; padding: 40px 0 52px; border-top: 1px solid var(--border); margin-top: 30px; position: relative; z-index: 2; }
 
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #000;
-            padding: 10px 16px;
-            border-radius: 10px;
-            opacity: 0;
-            transition: .3s;
-            pointer-events: none;
-            z-index: 10002;
-        }
+    /* Intro splash */
+    #intro { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: var(--bg); transition: opacity .7s ease, visibility .7s; }
+    #intro.done { opacity: 0; visibility: hidden; }
+    #intro .i-name { font-family: "Playfair Display", serif; font-weight: 800; font-size: clamp(30px, 7vw, 56px); letter-spacing: -1px; opacity: 0; transform: translateY(14px); animation: introIn .9s cubic-bezier(.2,.8,.2,1) forwards; }
+    #intro .i-name em { font-style: italic; background: linear-gradient(120deg, var(--terra), var(--amber)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #intro .i-line { width: 0; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--terra), var(--amber)); margin: 10px 0 4px; animation: introLine 1s .35s ease forwards; }
+    #intro .i-role { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); opacity: 0; transform: translateY(10px); animation: introIn .9s .3s cubic-bezier(.2,.8,.2,1) forwards; }
+    @keyframes introIn { to { opacity: 1; transform: none } }
+    @keyframes introLine { to { width: 130px } }
 
-        .toast.show {
-            opacity: 1
-        }
+    /* Scroll progress bar */
+    #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 40; background: linear-gradient(90deg, var(--terra), var(--amber)); transition: width .1s linear; }
 
-        @media(max-width:820px) {
-            .wrap {
-                grid-template-columns: 1fr
-            }
-        }
+    /* Back to top */
+    #toTop { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); backdrop-filter: blur(8px); color: var(--terra); font-size: 20px; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .3s, transform .3s, border-color .2s; box-shadow: 0 10px 24px rgba(193,90,58,.18); }
+    #toTop.show { opacity: 1; pointer-events: auto; transform: none; }
+    #toTop:hover { border-color: var(--terra); transform: translateY(-3px); }
 
-        #fireworks {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 10000;
-        }
+    /* ---------- Interactive terminal ---------- */
+    #termBtn { position: fixed; left: 20px; bottom: 20px; z-index: 40; height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); backdrop-filter: blur(8px); color: var(--terra); font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 24px rgba(193,90,58,.18); transition: transform .18s, border-color .2s, color .2s; }
+    #termBtn:hover { border-color: var(--terra); transform: translateY(-3px); }
+    #term { position: fixed; left: 20px; bottom: 76px; z-index: 50; width: min(420px, calc(100vw - 40px)); height: min(380px, 60vh); display: none; flex-direction: column; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--card); backdrop-filter: blur(16px); box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+    #term.show { display: flex; }
+    .term-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--border); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--muted); letter-spacing: .5px; }
+    .term-dots { display: inline-flex; gap: 6px; margin-right: 6px; }
+    .term-dots i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .term-dots i:nth-child(1){ background:#e06c60; } .term-dots i:nth-child(2){ background:#e0a13e; } .term-dots i:nth-child(3){ background:#7fb77e; }
+    .term-x { margin-left: auto; cursor: pointer; background: none; border: 0; color: var(--muted); font-size: 16px; line-height: 1; padding: 2px 6px; border-radius: 6px; }
+    .term-x:hover { color: var(--terra); }
+    #termOut { flex: 1; overflow-y: auto; padding: 14px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.6; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+    #termOut .cmd { color: var(--terra); }
+    #termOut .ok { color: var(--amber); }
+    #termOut a { color: var(--terra); text-decoration: underline; }
+    .term-in { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--border); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+    .term-in .ps { color: var(--terra); font-weight: 700; }
+    #termInput { flex: 1; background: none; border: 0; outline: none; color: var(--text); font-family: inherit; font-size: 13px; }
 
-        #countdown {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 120px;
-            font-weight: 800;
-            color: #facc15;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(6px);
-            z-index: 9998;
-        }
+    /* Active nav */
+    nav.links a.active { color: var(--terra); }
+    nav.links a.active::after { width: 100%; }
 
-        /* POPUP */
-        #login-popup {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-            z-index: 10001;
-            padding: 20px;
-        }
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 14px; text-align: center; }
+    .stat .num { font-family: "Playfair Display", serif; font-size: 38px; font-weight: 800; line-height: 1; background: linear-gradient(120deg, var(--terra), var(--amber)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .stat .lbl { font-size: 12px; color: var(--muted); margin-top: 8px; letter-spacing: .4px; }
 
-        #login-popup.show {
-            display: flex;
-        }
+    /* Projects */
+    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+    .proj { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; cursor: pointer; transition: transform .18s, box-shadow .25s, border-color .2s; }
+    .proj:hover, .proj:focus-visible { transform: translateY(-4px); border-color: var(--terra); box-shadow: 0 20px 44px rgba(193,90,58,.16); outline: none; }
+    .proj::after { content: "↗"; position: absolute; top: 18px; right: 20px; color: var(--terra); font-weight: 700; opacity: .45; transition: opacity .2s, transform .2s; }
+    .proj:hover::after { opacity: 1; transform: translate(2px,-2px); }
 
-        .popup-card {
-            width: min(92vw, 420px);
-            background: #0b1220;
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: 16px;
-            padding: 22px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
-            text-align: center;
-        }
+    /* Project detail modal */
+    .modal { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .modal[hidden] { display: none; }
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(20,12,8,.55); backdrop-filter: blur(4px); animation: fade .25s ease; }
+    .modal-card { position: relative; z-index: 1; width: 100%; max-width: 520px; max-height: 86vh; overflow-y: auto; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 30px 80px rgba(0,0,0,.4); animation: pop .3s cubic-bezier(.2,.8,.2,1); }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 20px; line-height: 1; cursor: pointer; transition: color .2s, border-color .2s; }
+    .modal-close:hover { color: var(--terra); border-color: var(--terra); }
+    .modal-card .ptag { font-size: 12px; color: var(--terra); font-weight: 700; letter-spacing: .8px; }
+    .modal-card h3 { margin: 10px 0 4px; font-family: "Playfair Display", serif; font-size: 24px; font-weight: 700; padding-right: 40px; }
+    .modal-card .m-period { font-size: 13px; color: var(--amber); font-weight: 600; margin-bottom: 18px; }
+    .modal-card ul { margin: 0 0 20px; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+    .modal-card li { margin-bottom: 8px; }
+    @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+    @keyframes pop { from { opacity: 0; transform: translateY(16px) scale(.97) } to { opacity: 1; transform: none } }
+    .proj .ptag { font-size: 12px; color: var(--terra); font-weight: 700; letter-spacing: .8px; }
+    .proj h3 { margin: 10px 0 10px; font-size: 18px; font-family: "Playfair Display", serif; font-weight: 600; }
+    .proj p { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+    .pstack { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pstack span { font-size: 12px; color: var(--muted); background: rgba(193,90,58,.05); border: 1px solid var(--border); padding: 4px 11px; border-radius: 999px; }
 
-        .popup-card h2 {
-            margin: 0 0 10px;
-            font-size: 22px;
-            color: #fff;
-        }
-
-        .popup-card p {
-            margin: 0 0 18px;
-            color: #9aa4b2;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .popup-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .popup-actions .btn-close {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, .15);
-        }
-    </style>
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 52px 0 40px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .hero .lead { margin-left: auto; margin-right: auto; }
+      .cta { justify-content: center; }
+      .eyebrow { justify-content: center; }
+      .sec-title { justify-content: center; }
+      .tilt { order: -1; }
+      .frame { margin: 0 auto; width: 210px; height: 210px; }
+      .about-grid { grid-template-columns: 1fr; }
+      nav.links { display: none; }
+      section { padding: 44px 0; }
+      .skills { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 440px) {
+      .container { padding: 0 18px; }
+      .brand { font-size: 16px; letter-spacing: 2px; }
+      .nav-right { gap: 10px; }
+      .hero { padding: 40px 0 34px; }
+      .hero h1 { font-size: 32px; }
+      .frame { width: 180px; height: 180px; }
+      .contact-card { padding: 36px 22px; }
+      .tbtn { width: 36px; height: 34px; font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: none; opacity: 1; transform: none; }
+      .glow { animation: none; }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="wrap">
+  <div id="intro">
+    <div class="i-name">Lê Thị <em>Ngọc Dung</em></div>
+    <div class="i-line"></div>
+    <div class="i-role">QA Engineer · Tester · Front-end</div>
+  </div>
+  <div id="progress"></div>
+  <button id="toTop" title="Lên đầu trang" aria-label="Lên đầu trang">↑</button>
 
-        <!-- SOLAR -->
-        <div class="card">
-            <h1>Tết Dương <span class="small">(1/1)</span></h1>
-            <div class="big" id="solar-count">--</div>
-            <div class="units">
-                <div class="unit">
-                    <div class="n" id="s-days">--</div>
-                    <div class="small">Ngày</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="s-hours">--</div>
-                    <div class="small">Giờ</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="s-mins">--</div>
-                    <div class="small">Phút</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="s-secs">--</div>
-                    <div class="small">Giây</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- LUNAR -->
-        <div class="card">
-            <h1 id="lunar-title">Tết Âm <span class="small" id="lunar-label"></span></h1>
-            <div class="big" id="lunar-count">--</div>
-            <div class="units">
-                <div class="unit">
-                    <div class="n" id="l-days">--</div>
-                    <div class="small">Ngày</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="l-hours">--</div>
-                    <div class="small">Giờ</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="l-mins">--</div>
-                    <div class="small">Phút</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="l-secs">--</div>
-                    <div class="small">Giây</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CUSTOM -->
-        <div class="card">
-            <h1 id="custom-title">⏳ Sự kiện của bạn</h1>
-            <div class="big" id="custom-count">--</div>
-            <div class="units">
-                <div class="unit">
-                    <div class="n" id="c-days">--</div>
-                    <div class="small">Ngày</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="c-hours">--</div>
-                    <div class="small">Giờ</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="c-mins">--</div>
-                    <div class="small">Phút</div>
-                </div>
-                <div class="unit">
-                    <div class="n" id="c-secs">--</div>
-                    <div class="small">Giây</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="controls">
-            <!-- LUNAR CONTROL -->
-            <div class="input-row">
-                <input type="datetime-local" id="lunar-input">
-                <button id="set-lunar">Cập nhật ngày về Tết Âm</button>
-                <button id="reset-lunar">Reset mặc định</button>
-            </div>
-
-            <!-- CUSTOM -->
-            <div class="input-row">
-                <input type="text" id="custom-name" placeholder="Tên sự kiện">
-                <input type="datetime-local" id="custom-datetime">
-                <button id="set-custom">Tạo</button>
-                <button id="reset-custom">Xóa</button>
-            </div>
-        </div>
-        <footer>© Lê Thị Ngọc Dung</footer>
+  <button id="termBtn" title="Terminal" aria-label="Mở terminal">&gt;_</button>
+  <div id="term" role="dialog" aria-label="Terminal">
+    <div class="term-bar">
+      <span class="term-dots"><i></i><i></i><i></i></span>
+      <span>dung@portfolio ~ %</span>
+      <button class="term-x" id="termClose" aria-label="Đóng">×</button>
     </div>
-
-    <div id="toast" class="toast"></div>
-
-    <div id="countdown">
-        <span id="count-num">3</span>
+    <div id="termOut" tabindex="0"></div>
+    <div class="term-in">
+      <span class="ps">&gt;</span>
+      <input id="termInput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Nhập lệnh" />
     </div>
+  </div>
 
-    <div id="celebrate" style="
-        position:fixed;
-        inset:0;
-        display:none;
-        align-items:center;
-        justify-content:center;
-        flex-direction:column;
-        background:rgba(0,0,0,.85);
-        z-index:9999;
-        color:#facc15;
-        font-size:48px;
-        font-weight:800;
-        text-align:center;">
-        <div id="celebrate-title"></div>
-        <div id="celebrate-sub" style="font-size:18px;margin-top:12px;color:#fff"></div>
-    </div>
+  <canvas id="embers"></canvas>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <div class="glow c"></div>
 
-    <!-- POPUP -->
-    <div id="login-popup" class="show">
-        <div class="popup-card">
-            <h2>Đăng nhập Google 🚀</h2>
-            <p>Tiếp tục bằng Google để truy cập trang web.</p>
-            <div class="popup-actions">
-                <button onclick="loginGoogle()">Đăng nhập</button>
-            </div>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Ngọc<span>Dung</span></div>
+      <div class="nav-right">
+        <nav class="links">
+          <a href="#about" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+          <a href="#skills" data-vi="Kỹ năng" data-en="Skills">Kỹ năng</a>
+          <a href="#projects" data-vi="Dự án" data-en="Projects">Dự án</a>
+          <a href="#experience" data-vi="Kinh nghiệm" data-en="Experience">Kinh nghiệm</a>
+          <a href="#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        </nav>
+        <div class="toggles">
+          <button id="langBtn" class="tbtn" title="Language">EN</button>
+          <button id="themeBtn" class="tbtn" title="Theme">🌙</button>
         </div>
+      </div>
     </div>
+  </header>
 
-    <canvas id="fireworks"></canvas>
+  <main class="container">
+    <section class="hero">
+      <div class="reveal">
+        <span class="eyebrow">QA Engineer / Tester · Front-end Developer</span>
+        <h1 class="serif">Lê Thị <em>Ngọc Dung</em></h1>
+        <p class="role" data-vi="Tìm lỗi trước khi người dùng gặp phải." data-en="Break it before users do.">Tìm lỗi trước khi người dùng gặp phải.</p>
+        <p class="lead" data-vi="QA tỉ mỉ với kinh nghiệm manual testing, API testing và kiểm thử hệ thống IoT thời gian thực, đồng thời làm Front-end với HTML/CSS/JS, React &amp; Vue. Luôn hướng tới sản phẩm ổn định, đáng tin cậy — và mục tiêu trở thành QA Lead." data-en="A detail-oriented QA with hands-on experience in manual testing, API testing and real-time IoT systems, who also builds front-end with HTML/CSS/JS, React &amp; Vue. Focused on stable, reliable products — aiming to grow into a QA Lead.">QA tỉ mỉ với kinh nghiệm manual testing, API testing và kiểm thử hệ thống IoT thời gian thực, đồng thời làm Front-end với HTML/CSS/JS, React &amp; Vue. Luôn hướng tới sản phẩm ổn định, đáng tin cậy — và mục tiêu trở thành QA Lead.</p>
+        <div class="cta">
+          <a class="btn primary" href="#experience" data-vi="Xem kinh nghiệm" data-en="View experience">Xem kinh nghiệm</a>
+          <a class="btn" href="#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        </div>
+      </div>
+      <div class="tilt reveal">
+        <div class="frame" id="frame">
+          <div class="photo-wrap"><img src="avatar.jpg" alt="Lê Thị Ngọc Dung" /></div>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        let isCountingDown = false;
-        let isCelebrating = false;
+    <section class="reveal" style="padding-top:0">
+      <div class="stats">
+        <div class="stat"><div class="num" data-count="3" data-suffix="+">0</div><div class="lbl" data-vi="Năm kinh nghiệm" data-en="Years experience">Năm kinh nghiệm</div></div>
+        <div class="stat"><div class="num" data-count="3">0</div><div class="lbl" data-vi="Công ty đã làm" data-en="Companies">Công ty đã làm</div></div>
+        <div class="stat"><div class="num" data-count="5" data-suffix="+">0</div><div class="lbl" data-vi="Dự án tham gia" data-en="Projects">Dự án tham gia</div></div>
+        <div class="stat"><div class="num" data-count="18" data-suffix="+">0</div><div class="lbl" data-vi="Công cụ &amp; kỹ năng" data-en="Tools &amp; skills">Công cụ &amp; kỹ năng</div></div>
+      </div>
+    </section>
 
-        const LUNAR_NEW_YEAR = {
-            2024: "2024-02-10", 2025: "2025-01-29", 2026: "2026-02-17",
-            2027: "2027-02-06", 2028: "2028-01-26", 2029: "2029-02-13",
-            2030: "2030-02-03", 2031: "2031-01-23", 2032: "2032-02-11",
-            2033: "2033-01-31", 2034: "2034-02-19", 2035: "2035-02-08",
-            2036: "2036-01-28", 2037: "2037-02-15", 2038: "2038-02-04",
-            2039: "2039-01-24", 2040: "2040-02-12"
-        };
+    <section id="about" class="reveal">
+      <p class="sec-title" data-vi="Về mình" data-en="About">Về mình</p>
+      <h2 class="sec-head serif" data-vi="Giới thiệu" data-en="Introduction">Giới thiệu</h2>
+      <div class="about-grid">
+        <div>
+          <p data-vi="Mình là &lt;strong&gt;Software QA Engineer&lt;/strong&gt; định hướng chi tiết, có kinh nghiệm thực chiến với manual testing, API testing và các hệ thống IoT xử lý dữ liệu thời gian thực. Mình thích đào sâu tới tận gốc vấn đề để đảm bảo sản phẩm ổn định và đáng tin cậy." data-en="I'm a detail-oriented &lt;strong&gt;Software QA Engineer&lt;/strong&gt; with hands-on experience in manual testing, API testing and real-time IoT data systems. I like digging to the root of issues to keep products stable and reliable.">Mình là <strong>Software QA Engineer</strong> định hướng chi tiết, có kinh nghiệm thực chiến với manual testing, API testing và các hệ thống IoT xử lý dữ liệu thời gian thực. Mình thích đào sâu tới tận gốc vấn đề để đảm bảo sản phẩm ổn định và đáng tin cậy.</p>
+          <p data-vi="Mình liên tục nâng cao kỹ năng kiểm thử và tự động hóa, đóng góp trực tiếp vào chất lượng sản phẩm. Mục tiêu dài hạn: trở thành &lt;strong&gt;QA Lead&lt;/strong&gt;, làm chủ quy trình kiểm thử xuyên suốt các dự án." data-en="I continuously sharpen my testing and automation skills, contributing directly to product quality. Long-term goal: become a &lt;strong&gt;QA Lead&lt;/strong&gt;, owning the testing process across projects.">Mình liên tục nâng cao kỹ năng kiểm thử và tự động hóa, đóng góp trực tiếp vào chất lượng sản phẩm. Mục tiêu dài hạn: trở thành <strong>QA Lead</strong>, làm chủ quy trình kiểm thử xuyên suốt các dự án.</p>
+        </div>
+        <div class="facts">
+          <div class="fact"><span class="k" data-vi="Vị trí" data-en="Position">Vị trí</span><span class="v">QA / Tester · Front-end</span></div>
+          <div class="fact"><span class="k" data-vi="Nơi sống" data-en="Location">Nơi sống</span><span class="v" data-vi="TP. Thủ Đức" data-en="Thu Duc City">TP. Thủ Đức</span></div>
+          <div class="fact"><span class="k" data-vi="Học vấn" data-en="Education">Học vấn</span><span class="v" data-vi="ĐH Tài chính – Marketing" data-en="Univ. of Finance – Marketing">ĐH Tài chính – Marketing</span></div>
+          <div class="fact"><span class="k" data-vi="Chuyên ngành" data-en="Major">Chuyên ngành</span><span class="v" data-vi="Hệ thống Thông tin Quản lý" data-en="Management Information System">Hệ thống Thông tin Quản lý</span></div>
+          <div class="fact"><span class="k">GPA</span><span class="v">3.33 / 4.0</span></div>
+          <div class="fact"><span class="k" data-vi="Ngoại ngữ" data-en="Language">Ngoại ngữ</span><span class="v">TOEIC 600</span></div>
+        </div>
+      </div>
+    </section>
 
-        const el = id => document.getElementById(id);
-        const toast = m => {
-            const t = el("toast"); t.textContent = m;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 2000);
-        };
-        const lunarInput = el("lunar-input");
+    <section id="skills" class="reveal">
+      <p class="sec-title" data-vi="Kỹ năng" data-en="Skills">Kỹ năng</p>
+      <h2 class="sec-head serif" data-vi="Kỹ năng chuyên môn" data-en="Core skills">Kỹ năng chuyên môn</h2>
 
-        function formatDateTimeLocal(date) {
-            const pad = n => String(n).padStart(2, "0");
-            return (
-                date.getFullYear() + "-" +
-                pad(date.getMonth() + 1) + "-" +
-                pad(date.getDate()) + "T" +
-                pad(date.getHours()) + ":" +
-                pad(date.getMinutes())
-            );
+      <p class="grp-label" data-vi="Kiểm thử / QA" data-en="Testing / QA">Kiểm thử / QA</p>
+      <div class="skills">
+        <div class="skill"><h4>Manual Testing <span>90%</span></h4><div class="bar"><i data-w="90"></i></div></div>
+        <div class="skill"><h4>API Testing <span>85%</span></h4><div class="bar"><i data-w="85"></i></div></div>
+        <div class="skill"><h4>Test Case Design <span>88%</span></h4><div class="bar"><i data-w="88"></i></div></div>
+        <div class="skill"><h4>Bug Tracking (Jira) <span>85%</span></h4><div class="bar"><i data-w="85"></i></div></div>
+        <div class="skill"><h4>SQL <span>75%</span></h4><div class="bar"><i data-w="75"></i></div></div>
+        <div class="skill"><h4>Automation (Selenium) <span>60%</span></h4><div class="bar"><i data-w="60"></i></div></div>
+      </div>
+
+      <p class="grp-label" data-vi="Front-end" data-en="Front-end">Front-end</p>
+      <div class="skills">
+        <div class="skill"><h4>HTML / CSS <span>85%</span></h4><div class="bar"><i data-w="85"></i></div></div>
+        <div class="skill"><h4>JavaScript <span>80%</span></h4><div class="bar"><i data-w="80"></i></div></div>
+        <div class="skill"><h4>React <span>75%</span></h4><div class="bar"><i data-w="75"></i></div></div>
+        <div class="skill"><h4>Vue.js <span>72%</span></h4><div class="bar"><i data-w="72"></i></div></div>
+        <div class="skill"><h4>Tailwind / Bootstrap <span>80%</span></h4><div class="bar"><i data-w="80"></i></div></div>
+        <div class="skill"><h4>Responsive UI <span>82%</span></h4><div class="bar"><i data-w="82"></i></div></div>
+      </div>
+
+      <div class="chips">
+        <span>Functional</span><span>Integration</span><span>System</span><span>UAT</span>
+        <span>Postman</span><span>Swagger</span><span>JMeter</span><span>Selenium</span>
+        <span>Jira</span><span>Redmine</span><span>SQL Server</span><span>Oracle</span>
+        <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Vue</span>
+        <span>Tailwind</span><span>Bootstrap</span><span>Git</span>
+        <span>Java</span><span>C#</span><span>STLC</span><span>Agile / Scrum</span>
+      </div>
+    </section>
+
+    <section id="projects" class="reveal">
+      <p class="sec-title" data-vi="Dự án" data-en="Projects">Dự án</p>
+      <h2 class="sec-head serif" data-vi="Dự án tiêu biểu" data-en="Featured projects">Dự án tiêu biểu</h2>
+      <div class="projects">
+        <div class="proj" data-key="solar" tabindex="0" role="button">
+          <span class="ptag" data-vi="IoT · THỜI GIAN THỰC" data-en="IoT · REAL-TIME">IoT · THỜI GIAN THỰC</span>
+          <h3 data-vi="Website giám sát điện mặt trời (IoT)" data-en="Solar Monitoring Website (IoT)">Website giám sát điện mặt trời (IoT)</h3>
+          <p data-vi="Kiểm thử hệ thống website IoT giám sát điện mặt trời theo thời gian thực: xác thực luồng dữ liệu từ thiết bị, API testing và kiểm tra tính ổn định khi xử lý dữ liệu liên tục." data-en="Tested a real-time solar power monitoring IoT web system: validated device data flow, API testing and stability checks for continuous data processing.">Kiểm thử hệ thống website IoT giám sát điện mặt trời theo thời gian thực: xác thực luồng dữ liệu từ thiết bị, API testing và kiểm tra tính ổn định khi xử lý dữ liệu liên tục.</p>
+          <div class="pstack"><span>IoT</span><span>Real-time</span><span>API Testing</span></div>
+        </div>
+        <div class="proj" data-key="tool" tabindex="0" role="button">
+          <span class="ptag" data-vi="DỰ ÁN CÁ NHÂN" data-en="PERSONAL PROJECT">DỰ ÁN CÁ NHÂN</span>
+          <h3 data-vi="Công cụ đối soát API – UI" data-en="API – UI Validation Tool">Công cụ đối soát API – UI</h3>
+          <p data-vi="Tự phát triển công cụ tự động so sánh API response với dữ liệu hiển thị trên UI, đảm bảo chính xác &amp; nhất quán giữa các thành phần hệ thống." data-en="Built a tool that auto-compares API responses with UI data, ensuring accuracy &amp; consistency across system components.">Tự phát triển công cụ tự động so sánh API response với dữ liệu hiển thị trên UI, đảm bảo chính xác &amp; nhất quán giữa các thành phần hệ thống.</p>
+          <div class="pstack"><span>API</span><span>Automation</span><span>Data Validation</span></div>
+        </div>
+        <div class="proj" data-key="awa" tabindex="0" role="button">
+          <span class="ptag" data-vi="WEBSITE" data-en="WEBSITE">WEBSITE</span>
+          <h3 data-vi="Website nhà máy nước AWA" data-en="AWA Water-plant Website">Website nhà máy nước AWA</h3>
+          <p data-vi="Kiểm thử chức năng trên nhiều trình duyệt, mobile &amp; desktop; API testing với Swagger và quản lý bug trên Redmine." data-en="Functional testing across browsers, mobile &amp; desktop; API testing with Swagger and bug tracking in Redmine.">Kiểm thử chức năng trên nhiều trình duyệt, mobile &amp; desktop; API testing với Swagger và quản lý bug trên Redmine.</p>
+          <div class="pstack"><span>Web Testing</span><span>Swagger</span><span>Redmine</span></div>
+        </div>
+        <div class="proj" data-key="fe" tabindex="0" role="button">
+          <span class="ptag" data-vi="FRONT-END · IoT" data-en="FRONT-END · IoT">FRONT-END · IoT</span>
+          <h3 data-vi="Giao diện web giám sát điện mặt trời (IoT)" data-en="Solar Monitoring Web UI (IoT)">Giao diện web giám sát điện mặt trời (IoT)</h3>
+          <p data-vi="Xây dựng giao diện web responsive cho hệ thống giám sát điện mặt trời: dashboard hiển thị dữ liệu thiết bị theo thời gian thực, biểu đồ &amp; trạng thái, hiển thị tốt trên mobile &amp; desktop." data-en="Built the responsive web UI for the solar monitoring system: a dashboard showing real-time device data, charts &amp; status, working well on mobile &amp; desktop.">Xây dựng giao diện web responsive cho hệ thống giám sát điện mặt trời: dashboard hiển thị dữ liệu thiết bị theo thời gian thực, biểu đồ &amp; trạng thái, hiển thị tốt trên mobile &amp; desktop.</p>
+          <div class="pstack"><span>HTML/CSS</span><span>JavaScript</span><span>Responsive</span><span>Dashboard</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="reveal">
+      <p class="sec-title" data-vi="Kinh nghiệm" data-en="Experience">Kinh nghiệm</p>
+      <h2 class="sec-head serif" data-vi="Hành trình làm việc" data-en="Work journey">Hành trình làm việc</h2>
+      <div class="timeline">
+        <div class="tl">
+          <div class="when" data-vi="05/2025 – HIỆN TẠI" data-en="05/2025 – PRESENT">05/2025 – HIỆN TẠI</div>
+          <h3>Tester</h3>
+          <div class="where" data-vi="Công ty công nghệ · (bảo mật) 🔒" data-en="Tech company · (confidential) 🔒">Công ty công nghệ · (bảo mật) 🔒</div>
+          <ul>
+            <li data-vi="Thiết kế &amp; thực thi test plan, test case, test script đảm bảo chất lượng hệ thống." data-en="Designed &amp; executed test plans, test cases and scripts to ensure system quality.">Thiết kế &amp; thực thi test plan, test case, test script đảm bảo chất lượng hệ thống.</li>
+            <li data-vi="Kiểm thử functional, integration, performance, compliance; xác thực dữ liệu thời gian thực từ thiết bị IoT." data-en="Functional, integration, performance &amp; compliance testing; validated real-time data from IoT devices.">Kiểm thử functional, integration, performance, compliance; xác thực dữ liệu thời gian thực từ thiết bị IoT.</li>
+            <li data-vi="API testing, kiểm tra luồng dữ liệu giữa các module với Postman, JMeter, Selenium." data-en="API testing and data-flow checks across modules with Postman, JMeter, Selenium.">API testing, kiểm tra luồng dữ liệu giữa các module với Postman, JMeter, Selenium.</li>
+            <li data-vi="Tự phát triển công cụ nội bộ tự động so sánh API response với dữ liệu UI, tăng độ chính xác &amp; nhất quán." data-en="Built an internal tool to auto-compare API responses with UI data, improving accuracy &amp; consistency.">Tự phát triển công cụ nội bộ tự động so sánh API response với dữ liệu UI, tăng độ chính xác &amp; nhất quán.</li>
+          </ul>
+        </div>
+        <div class="tl">
+          <div class="when">04/2024 – 04/2025</div>
+          <h3>Tester</h3>
+          <div class="where">Nexon Networks Vina</div>
+          <ul>
+            <li data-vi="Review đặc tả, xây dựng test case trên Case Management và thực thi kiểm thử." data-en="Reviewed specs, built test cases in Case Management and executed testing.">Review đặc tả, xây dựng test case trên Case Management và thực thi kiểm thử.</li>
+            <li data-vi="Đăng ký &amp; quản lý bug trên Jira; hỗ trợ thành viên senior kiểm thử nội dung lớn." data-en="Registered &amp; managed bugs in Jira; supported senior members testing large content.">Đăng ký &amp; quản lý bug trên Jira; hỗ trợ thành viên senior kiểm thử nội dung lớn.</li>
+            <li data-vi="Phối hợp với trụ sở Hàn Quốc xử lý bug, Q&amp;A và cải tiến liên tục." data-en="Collaborated with the Korea HQ on bugs, Q&amp;A and continuous improvement.">Phối hợp với trụ sở Hàn Quốc xử lý bug, Q&amp;A và cải tiến liên tục.</li>
+          </ul>
+        </div>
+        <div class="tl">
+          <div class="when">09/2023 – 12/2023</div>
+          <h3 data-vi="Thực tập Tester" data-en="Intern Tester">Thực tập Tester</h3>
+          <div class="where">Amazing Technology and Solutions Co.</div>
+          <ul>
+            <li data-vi="Nghiên cứu yêu cầu, viết test case và thực thi trên nhiều trình duyệt, mobile, desktop." data-en="Researched requirements, wrote test cases and executed across browsers, mobile, desktop.">Nghiên cứu yêu cầu, viết test case và thực thi trên nhiều trình duyệt, mobile, desktop.</li>
+            <li data-vi="Dùng Swagger cho API testing; log &amp; theo dõi bug trên Redmine." data-en="Used Swagger for API testing; logged &amp; tracked bugs in Redmine.">Dùng Swagger cho API testing; log &amp; theo dõi bug trên Redmine.</li>
+            <li data-vi="Tham gia dự án website nhà máy nước AWA và web đăng ký khóa học Bsmart." data-en="Worked on the AWA water-plant website and the Bsmart course-registration site.">Tham gia dự án website nhà máy nước AWA và web đăng ký khóa học Bsmart.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <div class="contact-card">
+        <p class="sec-title" style="justify-content:center" data-vi="Liên hệ" data-en="Contact">Liên hệ</p>
+        <h2 data-vi="Kết nối với mình" data-en="Get in touch">Kết nối với mình</h2>
+        <p data-vi="Có cơ hội công việc hay muốn trao đổi? Mình luôn sẵn sàng." data-en="Got an opportunity or just want to chat? I'm always open.">Có cơ hội công việc hay muốn trao đổi? Mình luôn sẵn sàng.</p>
+        <div class="socials">
+          <a class="btn primary" href="mailto:ltndung261002@gmail.com">Email</a>
+          <a class="btn primary" href="tel:0943422027">0943 422 027</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close aria-label="Đóng">×</button>
+      <span class="ptag" id="m-tag"></span>
+      <h3 id="m-title"></h3>
+      <div class="m-period" id="m-period"></div>
+      <ul id="m-body"></ul>
+      <div class="pstack" id="m-stack"></div>
+      <a id="m-link" class="btn primary" target="_blank" rel="noopener" hidden style="margin-top:20px"></a>
+    </div>
+  </div>
+
+  <footer>© <span id="year"></span> LÊ THỊ NGỌC DUNG · QA / TESTER</footer>
+
+  <script>
+    /* Luôn mở ở đầu trang khi tải lại (không nhảy xuống theo #hash hay vị trí cũ) */
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.addEventListener("load", () => window.scrollTo(0, 0));
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* ---------- Theme & Language toggles ---------- */
+    const root = document.documentElement;
+    const themeBtn = document.getElementById("themeBtn");
+    const langBtn = document.getElementById("langBtn");
+
+    function applyTheme(t, save) {
+      root.setAttribute("data-theme", t);
+      themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+      if (save) try { localStorage.setItem("theme_v2", t); } catch (e) {}
+    }
+    function applyLang(l, save) {
+      root.setAttribute("lang", l);
+      document.querySelectorAll("[data-vi]").forEach(el => {
+        const val = el.getAttribute("data-" + l);
+        if (val != null) el.innerHTML = val;
+      });
+      langBtn.textContent = l === "vi" ? "EN" : "VI";
+      if (save) try { localStorage.setItem("lang_v2", l); } catch (e) {}
+    }
+
+    let theme = "dark", lang = "vi";
+    try { theme = localStorage.getItem("theme_v2") || "dark"; } catch (e) {}
+    try { lang = localStorage.getItem("lang_v2") || "vi"; } catch (e) {}
+    applyTheme(theme);
+    applyLang(lang);
+
+    themeBtn.addEventListener("click", () => applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true));
+    langBtn.addEventListener("click", () => applyLang(root.getAttribute("lang") === "vi" ? "en" : "vi", true));
+
+    /* ---------- Intro splash ---------- */
+    (function () {
+      const intro = document.getElementById("intro");
+      if (!intro) return;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let seen = false;
+      try { seen = sessionStorage.getItem("introSeen") === "1"; } catch (e) {}
+      if (seen || reduce) { intro.remove(); return; }
+      document.body.style.overflow = "hidden";
+      setTimeout(() => {
+        intro.classList.add("done");
+        document.body.style.overflow = "";
+        try { sessionStorage.setItem("introSeen", "1"); } catch (e) {}
+        setTimeout(() => intro.remove(), 800);
+      }, 1600);
+    })();
+
+    /* ---------- Rising embers ---------- */
+    (function () {
+      const canvas = document.getElementById("embers");
+      const ctx = canvas.getContext("2d");
+      let w, h, items;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const colors = ["#e07a52", "#e0a13e", "#c25636", "#f0c27a"];
+      function resize() {
+        w = canvas.width = innerWidth; h = canvas.height = innerHeight;
+        const n = Math.min(46, Math.floor(w / 26));
+        items = Array.from({ length: n }, () => spawn(true));
+      }
+      function spawn(initial) {
+        return { x: Math.random()*w, y: initial ? Math.random()*h : h + 20, r: Math.random()*2.2+.8,
+          vy: -(Math.random()*.7+.3), vx: (Math.random()-.5)*.4,
+          c: colors[(Math.random()*colors.length)|0], a: Math.random()*.5+.3,
+          tw: Math.random()*Math.PI*2 };
+      }
+      function step() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < items.length; i++) {
+          const p = items[i];
+          p.y += p.vy; p.x += p.vx + Math.sin(p.tw += .02) * .3;
+          if (p.y < -20) items[i] = spawn(false);
+          ctx.globalAlpha = p.a * (.6 + .4 * Math.sin(p.tw));
+          ctx.fillStyle = p.c;
+          ctx.shadowColor = p.c; ctx.shadowBlur = 8;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
         }
+        ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+        requestAnimationFrame(step);
+      }
+      resize(); addEventListener("resize", resize); if (!reduce) step();
+    })();
 
-        let lunarMode = localStorage.getItem("lunar-mode") || "auto";
-        let lunarTarget;
-        let lunarPhase = lunarMode === "custom" ? "custom" : "lunar";
+    /* ---------- Reveal + skill bars ---------- */
+    function animateCount(el) {
+      if (el.dataset.done) return; el.dataset.done = "1";
+      const target = +el.dataset.count, suffix = el.dataset.suffix || "", dur = 1200, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min(1, (now - t0) / dur);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
 
-        function getNextLunar() {
-            const now = new Date();
-            for (let y = now.getFullYear(); y <= 2040; y++) {
-                const d = LUNAR_NEW_YEAR[y];
-                if (d && new Date(d) > now) return new Date(d);
-            }
-            return new Date("2040-02-12");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          e.target.querySelectorAll(".bar > i").forEach(i => { i.style.width = i.dataset.w + "%"; });
+          e.target.querySelectorAll(".num[data-count]").forEach(animateCount);
+          io.unobserve(e.target);
         }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-        function setLunarLabel() {
-            el("lunar-title").firstChild.nodeValue =
-                lunarPhase === "custom" ? "Ngày về Tết Âm " : "Tết Âm ";
+    /* Scroll progress + active nav + back-to-top */
+    (function () {
+      const links = [...document.querySelectorAll("nav.links a")];
+      const sections = links.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+      const progress = document.getElementById("progress");
+      const toTop = document.getElementById("toTop");
+      function onScroll() {
+        const st = window.scrollY;
+        const docH = document.documentElement.scrollHeight - innerHeight;
+        progress.style.width = (docH > 0 ? st / docH * 100 : 0) + "%";
+        toTop.classList.toggle("show", st > 400);
+        let cur = null;
+        for (const s of sections) { if (s.getBoundingClientRect().top <= 130) cur = s; }
+        links.forEach(a => a.classList.toggle("active", cur && a.getAttribute("href") === "#" + cur.id));
+      }
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    })();
 
-            el("lunar-label").textContent =
-                lunarTarget.toLocaleDateString();
+    /* ---------- Project detail modal ---------- */
+    (function () {
+      const data = {
+        solar: {
+          tag: { vi: "IoT · Thời gian thực", en: "IoT · Real-time" },
+          title: { vi: "Website giám sát điện mặt trời (IoT)", en: "Solar Monitoring Website (IoT)" },
+          period: { vi: "05/2025 – Hiện tại", en: "05/2025 – Present" },
+          body: {
+            vi: ["Vai trò: Tester — kiểm thử website giám sát điện mặt trời theo thời gian thực.",
+                 "Xác thực luồng dữ liệu từ thiết bị IoT (công suất, sản lượng, trạng thái) hiển thị lên dashboard.",
+                 "API testing với Postman/Swagger; đối chiếu độ chính xác & nhất quán giữa API và UI.",
+                 "Kiểm thử hiệu năng & độ ổn định khi hệ thống xử lý dữ liệu liên tục (JMeter).",
+                 "Báo cáo & quản lý bug trên Jira, phối hợp dev phân tích nguyên nhân gốc."],
+            en: ["Role: Tester — testing a real-time solar power monitoring website.",
+                 "Validated IoT device data flow (power, yield, status) shown on the dashboard.",
+                 "API testing with Postman/Swagger; checked accuracy & consistency between API and UI.",
+                 "Performance & stability testing for continuous data processing (JMeter).",
+                 "Reported & managed bugs in Jira, worked with devs on root-cause analysis."]
+          },
+          stack: ["IoT", "Real-time", "Postman", "Swagger", "JMeter", "Jira"]
+        },
+        tool: {
+          tag: { vi: "Dự án cá nhân", en: "Personal project" },
+          title: { vi: "Công cụ đối soát API – UI", en: "API – UI Validation Tool" },
+          period: { vi: "Dự án cá nhân", en: "Personal project" },
+          link: "https://github.com/junnyne/auto-api-ui-testing-demo",
+          body: {
+            vi: ["Tự phát triển công cụ tự động lấy API response và so sánh với dữ liệu hiển thị trên UI.",
+                 "Phát hiện sớm sai lệch dữ liệu giữa backend và giao diện, giảm công kiểm tra thủ công.",
+                 "Tăng độ chính xác & nhất quán dữ liệu giữa các thành phần hệ thống.",
+                 "Rút ngắn thời gian hồi quy và nâng cao chất lượng phát hiện lỗi."],
+            en: ["Built a tool that pulls API responses and auto-compares them with UI data.",
+                 "Caught data mismatches between backend and UI early, cutting manual effort.",
+                 "Improved data accuracy & consistency across system components.",
+                 "Shortened regression time and improved defect-detection quality."]
+          },
+          stack: ["API", "Automation", "Data Validation"]
+        },
+        awa: {
+          tag: { vi: "Website", en: "Website" },
+          title: { vi: "Website nhà máy nước AWA", en: "AWA Water-plant Website" },
+          period: { vi: "09/2023 – 12/2023 · Thực tập", en: "09/2023 – 12/2023 · Internship" },
+          body: {
+            vi: ["Nghiên cứu yêu cầu, viết & thực thi test case trên nhiều trình duyệt, mobile & desktop.",
+                 "API testing với Swagger; log & theo dõi bug trên Redmine.",
+                 "Phối hợp cùng team phát triển để hiểu sâu tính năng trong quá trình làm việc."],
+            en: ["Researched requirements, wrote & executed test cases across browsers, mobile & desktop.",
+                 "API testing with Swagger; logged & tracked bugs in Redmine.",
+                 "Collaborated with the dev team to deeply understand features during work."]
+          },
+          stack: ["Web Testing", "Swagger", "Redmine", "Cross-browser"]
+        },
+        fe: {
+          tag: { vi: "Front-end · IoT", en: "Front-end · IoT" },
+          title: { vi: "Giao diện web giám sát điện mặt trời (IoT)", en: "Solar Monitoring Web UI (IoT)" },
+          period: { vi: "05/2025 – Hiện tại", en: "05/2025 – Present" },
+          /* link: "https://...", */
+          body: {
+            vi: ["Vai trò: Front-end — xây dựng giao diện website giám sát điện mặt trời.",
+                 "Dựng dashboard hiển thị dữ liệu thiết bị IoT theo thời gian thực (công suất, sản lượng, trạng thái).",
+                 "Thiết kế biểu đồ & bảng dữ liệu trực quan, cập nhật liên tục.",
+                 "Giao diện responsive bằng HTML/CSS/JavaScript, hiển thị tốt trên mobile & desktop.",
+                 "Phối hợp với backend để hiển thị đúng luồng dữ liệu từ API."],
+            en: ["Role: Front-end — built the solar power monitoring website UI.",
+                 "Created a dashboard showing real-time IoT device data (power, yield, status).",
+                 "Designed intuitive charts & data tables with continuous updates.",
+                 "Responsive UI with HTML/CSS/JavaScript, working well on mobile & desktop.",
+                 "Worked with the backend to render the correct API data flow."]
+          },
+          stack: ["HTML/CSS", "JavaScript", "Responsive", "Dashboard", "IoT", "Real-time"]
         }
+      };
 
-        if (lunarMode === "custom" && localStorage.getItem("lunar-custom")) {
-            lunarTarget = new Date(localStorage.getItem("lunar-custom"));
-        } else {
-            lunarTarget = getNextLunar();
-        }
+      const modal = document.getElementById("modal");
+      const mTag = document.getElementById("m-tag"), mTitle = document.getElementById("m-title");
+      const mPeriod = document.getElementById("m-period"), mBody = document.getElementById("m-body"), mStack = document.getElementById("m-stack"), mLink = document.getElementById("m-link");
+      let current = null;
 
-        lunarInput.max = formatDateTimeLocal(lunarTarget);
-        setLunarLabel();
+      function lang() { return root.getAttribute("lang") === "en" ? "en" : "vi"; }
+      function render() {
+        if (!current) return;
+        const d = data[current], l = lang();
+        mTag.textContent = d.tag[l];
+        mTitle.textContent = d.title[l];
+        mPeriod.textContent = d.period[l];
+        mBody.innerHTML = "";
+        d.body[l].forEach(t => { const li = document.createElement("li"); li.textContent = t; mBody.appendChild(li); });
+        mStack.innerHTML = "";
+        d.stack.forEach(t => { const s = document.createElement("span"); s.textContent = t; mStack.appendChild(s); });
+        if (d.link) { mLink.href = d.link; mLink.textContent = (l === "en" ? "View on GitHub ↗" : "Xem trên GitHub ↗"); mLink.hidden = false; }
+        else { mLink.hidden = true; }
+      }
+      function open(key) { current = key; render(); modal.hidden = false; document.body.style.overflow = "hidden"; }
+      function close() { modal.hidden = true; current = null; document.body.style.overflow = ""; }
 
-        function update(t, p) {
-            const n = new Date();
-            let dff = Math.max(0, t - n);
-            const d = Math.floor(dff / 86400000); dff %= 86400000;
-            const h = Math.floor(dff / 3600000); dff %= 3600000;
-            const m = Math.floor(dff / 60000); dff %= 60000;
-            const s = Math.floor(dff / 1000);
-            el(p + "-days").textContent = d;
-            el(p + "-hours").textContent = String(h).padStart(2, "0");
-            el(p + "-mins").textContent = String(m).padStart(2, "0");
-            el(p + "-secs").textContent = String(s).padStart(2, "0");
-            el({ s: "solar-count", l: "lunar-count", c: "custom-count" }[p])
-                .textContent = `${d} ngày ${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-        }
+      document.querySelectorAll(".proj[data-key]").forEach(card => {
+        card.addEventListener("click", () => open(card.dataset.key));
+        card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(card.dataset.key); } });
+      });
+      modal.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", close));
+      document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) close(); });
+      langBtn.addEventListener("click", () => { if (!modal.hidden) render(); });
+    })();
 
-        /* LUNAR BUTTONS */
-        el("set-lunar").onclick = () => {
-            const v = el("lunar-input").value;
-            if (!v) return toast("Chọn ngày đi 😤");
+    /* ---------- 3D tilt on photo ---------- */
+    (function () {
+      const wrap = document.querySelector(".tilt"), el = document.getElementById("frame");
+      if (!wrap || !el) return;
+      wrap.addEventListener("mousemove", (ev) => {
+        const r = el.getBoundingClientRect();
+        const px = (ev.clientX - r.left) / r.width, py = (ev.clientY - r.top) / r.height;
+        el.style.transform = `rotateY(${(px-.5)*16}deg) rotateX(${(.5-py)*16}deg)`;
+      });
+      wrap.addEventListener("mouseleave", () => { el.style.transform = ""; });
+    })();
 
-            lunarTarget = new Date(v);
-            lunarMode = "custom";
-            lunarPhase = "custom";
+    /* ---------- Interactive terminal ---------- */
+    (function () {
+      const btn = document.getElementById("termBtn");
+      const panel = document.getElementById("term");
+      const out = document.getElementById("termOut");
+      const input = document.getElementById("termInput");
+      const closeBtn = document.getElementById("termClose");
+      if (!btn || !panel || !out || !input) return;
 
-            localStorage.setItem("lunar-mode", "custom");
-            localStorage.setItem("lunar-custom", v);
+      const EMAIL = "ltndung261002@gmail.com";
+      const PHONE = "0943 422 027";
+      const GITHUB = "https://github.com/junnyne";
+      const T = () => (root.getAttribute("lang") === "en" ? "en" : "vi");
+      const history = []; let hi = -1; let opened = false;
 
-            setLunarLabel();
-            toast("Đã cập nhật ngày về Tết Âm 🎉");
-        };
+      function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+      function print(html) { const d = document.createElement("div"); d.innerHTML = html; out.appendChild(d); out.scrollTop = out.scrollHeight; }
+      function line(vi, en) { print(esc(T() === "en" ? en : vi)); }
 
-        el("reset-lunar").onclick = () => {
-            lunarMode = "auto";
-            lunarPhase = "lunar";
+      function banner() {
+        line("Terminal của Dung · gõ 'help' để xem lệnh.", "Dung's terminal · type 'help' to see commands.");
+      }
+      function scrollTo(id, vi, en) {
+        const s = document.getElementById(id);
+        if (s) { s.scrollIntoView({ behavior: "smooth" }); line(vi, en); }
+        else line("Không tìm thấy mục.", "Section not found.");
+      }
 
-            localStorage.setItem("lunar-mode", "auto");
-            localStorage.removeItem("lunar-custom");
+      const cmds = {
+        help() {
+          print('<span class="ok">' + (T() === "en" ? "Available commands:" : "Các lệnh:") + "</span>");
+          const list = [
+            ["help", T() === "en" ? "show this list" : "hiện danh sách lệnh"],
+            ["whoami", T() === "en" ? "who is Dung" : "Dung là ai"],
+            ["about / skills / projects", T() === "en" ? "jump to section" : "nhảy tới mục"],
+            ["experience / contact", T() === "en" ? "jump to section" : "nhảy tới mục"],
+            ["email / phone / github", T() === "en" ? "open / show contact" : "mở / hiện liên hệ"],
+            ["theme [dark|light]", T() === "en" ? "switch theme" : "đổi giao diện"],
+            ["lang [vi|en]", T() === "en" ? "switch language" : "đổi ngôn ngữ"],
+            ["clear", T() === "en" ? "clear screen" : "xóa màn hình"],
+          ];
+          list.forEach(([c, d]) => print('<span class="cmd">' + esc(c) + "</span> — " + esc(d)));
+        },
+        whoami() {
+          line("Lê Thị Ngọc Dung — QA / Tester & Front-end Developer.",
+               "Le Thi Ngoc Dung — QA / Tester & Front-end Developer.");
+        },
+        about() { scrollTo("about", "→ Mục Giới thiệu", "→ About section"); },
+        skills() { scrollTo("skills", "→ Mục Kỹ năng", "→ Skills section"); },
+        projects() { scrollTo("projects", "→ Mục Dự án", "→ Projects section"); },
+        experience() { scrollTo("experience", "→ Mục Kinh nghiệm", "→ Experience section"); },
+        contact() {
+          scrollTo("contact", "→ Mục Liên hệ", "→ Contact section");
+          print("Email: " + esc(EMAIL) + "  ·  Tel: " + esc(PHONE));
+        },
+        email() { window.location.href = "mailto:" + EMAIL; print("Email: " + esc(EMAIL)); },
+        phone() { print("Tel: " + esc(PHONE)); },
+        github() { window.open(GITHUB, "_blank"); print('GitHub: <a href="' + GITHUB + '" target="_blank" rel="noopener">' + esc(GITHUB) + "</a>"); },
+        theme(arg) {
+          let t = arg;
+          if (t !== "dark" && t !== "light") t = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          applyTheme(t, true);
+          line("Đã đổi theme → " + t, "Theme switched → " + t);
+        },
+        lang(arg) {
+          let l = arg;
+          if (l !== "vi" && l !== "en") l = root.getAttribute("lang") === "vi" ? "en" : "vi";
+          applyLang(l, true);
+          line("Đã đổi ngôn ngữ → " + l, "Language switched → " + l);
+        },
+        clear() { out.innerHTML = ""; },
+        cls() { out.innerHTML = ""; },
+        exit() { closePanel(); },
+        close() { closePanel(); },
+      };
 
-            lunarTarget = getNextLunar();
-            setLunarLabel();
+      function run(raw) {
+        const str = raw.trim();
+        print('<span class="cmd">&gt; ' + esc(str) + "</span>");
+        if (!str) return;
+        history.unshift(str); hi = -1;
+        const parts = str.split(/\s+/);
+        const name = parts[0].toLowerCase();
+        const arg = (parts[1] || "").toLowerCase();
+        if (name === "sudo") { line("Xin lỗi, bạn không có quyền 😏", "Nice try — permission denied 😏"); return; }
+        if (name === "ls" || name === "?") { cmds.help(); return; }
+        if (cmds[name]) { cmds[name](arg); }
+        else line("Lệnh không tồn tại: " + name + " — gõ 'help'.", "Command not found: " + name + " — type 'help'.");
+      }
 
-            toast("Đã reset về Tết Âm ✔️");
-        };
+      function openPanel() {
+        panel.classList.add("show"); btn.style.display = "none";
+        if (!opened) { opened = true; banner(); }
+        setTimeout(() => input.focus(), 50);
+      }
+      function closePanel() { panel.classList.remove("show"); btn.style.display = ""; }
 
-        setInterval(() => {
-            const now = new Date();
-
-            /* ===== TẾT DƯƠNG ===== */
-            const solarTarget = new Date(now.getFullYear() + 1, 0, 1);
-            const solarDiff = solarTarget - now;
-
-            if (!isCountingDown && !isCelebrating) {
-                update(solarTarget, "s");
-            }
-
-            if (solarDiff <= 3500 && solarDiff > 2500 && !isCountingDown && !isCelebrating) {
-                startCountdown(() => celebrate("solar"));
-            }
-
-            /* ===== TẾT ÂM ===== */
-            const lunarDiff = lunarTarget - now;
-
-            if (!isCountingDown && !isCelebrating) {
-                update(lunarTarget, "l");
-            }
-
-            if (lunarDiff <= 3500 && lunarDiff > 2500 && !isCountingDown && !isCelebrating) {
-                startCountdown(() => {
-                    celebrate("lunar");
-                    lunarTarget = getNextLunar();
-                    setLunarLabel();
-                });
-            }
-
-            /* ===== CUSTOM EVENT (LUÔN CHẠY) ===== */
-            if (customTarget) {
-                update(customTarget, "c");
-            }
-
-            lunarInput.max = formatDateTimeLocal(lunarTarget);
-        }, 1000);
-
-        /* CUSTOM */
-        let customTarget = null;
-        const saved = JSON.parse(localStorage.getItem("custom") || "null");
-        if (saved) {
-            customTarget = new Date(saved.date);
-            el("custom-title").textContent = "⏳ " + saved.name;
-        }
-        el("set-custom").onclick = () => {
-            const n = el("custom-name").value.trim();
-            const d = el("custom-datetime").value;
-            if (!n || !d) return toast("Nhập đủ 😤");
-            customTarget = new Date(d);
-            el("custom-title").textContent = "⏳ " + n;
-            localStorage.setItem("custom", JSON.stringify({ name: n, date: d }));
-            toast("Đã tạo ✨");
-        };
-        el("reset-custom").onclick = () => {
-            customTarget = null; localStorage.removeItem("custom");
-            el("custom-title").textContent = "⏳ Sự kiện của bạn";
-            ["c-days", "c-hours", "c-mins", "c-secs"].forEach(i => el(i).textContent = "--");
-            el("custom-count").textContent = "--";
-            toast("Đã xóa 🗑️");
-        };
-
-        function startCountdown(onDone) {
-            if (isCountingDown) return;
-            isCountingDown = true;
-
-            const cd = el("countdown");
-            const num = el("count-num");
-            cd.style.display = "flex";
-
-            let n = 3;
-            num.textContent = n;
-
-            const timer = setInterval(() => {
-                n--;
-                if (n === 0) {
-                    clearInterval(timer);
-                    cd.style.display = "none";
-                    isCountingDown = false;
-                    onDone();
-                } else {
-                    num.textContent = n;
-                }
-            }, 1000);
-        }
-        function celebrate(type) {
-            if (isCelebrating) return;
-            isCelebrating = true;
-
-            const overlay = el("celebrate");
-            const title = el("celebrate-title");
-            const sub = el("celebrate-sub");
-
-            if (type === "solar") {
-                title.textContent = "🎉 HAPPY NEW YEAR 🎉";
-                sub.textContent = "Wishing you joy, success and happiness";
-            } else {
-                title.textContent = "🎊 CHÚC MỪNG NĂM MỚI 🎊";
-                sub.textContent = "An khang – Thịnh vượng – Vạn sự như ý";
-            }
-
-            overlay.style.display = "flex";
-            startFireworks();
-
-            toast(type === "solar"
-                ? "🎉 Happy New Year!"
-                : "🎊 Chúc mừng năm mới!");
-
-            setTimeout(() => {
-                overlay.style.display = "none";
-                stopFireworks();
-                isCelebrating = false;
-            }, 5000);
-        }
-
-        const canvas = document.getElementById("fireworks");
-        const ctx = canvas.getContext("2d");
-
-        let fireworks = [];
-        let fireworksRunning = false;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x;
-                this.y = y;
-                this.radius = Math.random() * 2 + 1;
-                this.color = color;
-                this.speedX = (Math.random() - 0.5) * 6;
-                this.speedY = (Math.random() - 0.5) * 6;
-                this.life = 60;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life--;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-        }
-
-        function createFirework() {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height * 0.6;
-            const colors = ["#facc15", "#fb7185", "#60a5fa", "#34d399", "#f472b6"];
-
-            for (let i = 0; i < 60; i++) {
-                fireworks.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
-            }
-        }
-
-        function animateFireworks() {
-            if (!fireworksRunning) return;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            fireworks = fireworks.filter(p => p.life > 0);
-            fireworks.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            requestAnimationFrame(animateFireworks);
-        }
-
-        function startFireworks() {
-            fireworksRunning = true;
-            fireworks = [];
-            animateFireworks();
-
-            const interval = setInterval(() => {
-                if (!fireworksRunning) {
-                    clearInterval(interval);
-                    return;
-                }
-                createFirework();
-            }, 600);
-        }
-
-        function stopFireworks() {
-            fireworksRunning = false;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="server.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function () {
-            emailjs.init("WCtzIn3rtDHcGjjOW"); 
-        })();
-    </script>
+      btn.addEventListener("click", openPanel);
+      closeBtn.addEventListener("click", closePanel);
+      out.addEventListener("click", () => input.focus());
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { run(input.value); input.value = ""; }
+        else if (e.key === "ArrowUp") { if (hi < history.length - 1) { hi++; input.value = history[hi]; e.preventDefault(); } }
+        else if (e.key === "ArrowDown") { if (hi > 0) { hi--; input.value = history[hi]; } else { hi = -1; input.value = ""; } }
+        else if (e.key === "Escape") { closePanel(); }
+      });
+    })();
+  </script>
 </body>
+
 </html>
